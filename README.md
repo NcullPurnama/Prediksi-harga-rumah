@@ -380,8 +380,8 @@ Evaluasi model dilakukan untuk mengetahui seberapa baik model memprediksi harga 
 
 | Model               | MSE              | RMSE             | R² Score         |
 |--------------------|------------------|------------------|------------------|
-| Linear Regression  | 1.17e+18         | 1.08e+09           | 0.6324           |
-| Random Forest      | ✅ 4.92e+17 (lebih rendah)   | ✅ 7.01e+08 (lebih kecil)    | ✅ 0.8043 (mendekati 1)    |
+| Linear Regression  | ✅ 1.17e+18 (lebih rendah)   | 1.08e+09           | 0.6324           |
+| Random Forest      |  4.92e+17    | ✅ 7.01e+08 (lebih kecil)    | ✅ 0.8043 (mendekati 1)    |
 
 > 🔍 Berdasarkan ketiga metrik tersebut, **Random Forest Regressor** terbukti memiliki performa yang lebih baik dalam memprediksi harga rumah.
 
