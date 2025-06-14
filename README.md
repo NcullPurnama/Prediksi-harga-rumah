@@ -335,8 +335,8 @@ Untuk menyelesaikan permasalahan prediksi harga rumah di wilayah Jabodetabek, du
 
 | Model               | MSE (lebih kecil lebih baik) | RMSE | R² Score (lebih tinggi lebih baik) |
 |--------------------|------------------------------|------|-------------------------------------|
-| Linear Regression  | ~ tinggi (baseline)          | ~    | ~ rendah                            |
-| Random Forest      | ✅ lebih rendah               | ✅   | ✅ lebih tinggi                     |
+| Linear Regression  | 1.17e+18   | 1.08e+09           | 0.6324           |
+| Random Forest      |  4.92e+17    | 7.01e+08 | 0.8043     |
 
 > **Random Forest Regressor dipilih sebagai model terbaik** karena menghasilkan nilai R² dan RMSE yang jauh lebih baik dibandingkan baseline Linear Regression.
 
