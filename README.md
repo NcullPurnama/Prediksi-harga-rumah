@@ -240,14 +240,13 @@ Beberapa kolom seperti `url`, `title`, `address`, `ads_id`, `year_built` dihapus
 
 ---
 
-### 2. Menangani Missing Values
-Beberapa kolom seperti `building_age`, `property_condition`, `furnishing`, dan `building_orientation` memiliki nilai kosong (`NaN`).
+### 2. Memperbaiki tipedata
+Beberapa kolom seperti `bedrooms`, `bathrooms`, `maid_bedrooms`, `maid_bathrooms`, `floors`, `building_age`, `garages`, `carports` belum berisi integer
 
 Teknik yang digunakan:
-- Untuk numerik: diisi dengan **median**
-- Untuk kategorikal: diisi dengan **modus (nilai paling sering)**
+- mengubah tipe data kolom numerik menjadi int64
 
-> 📌 **Alasan:** Menghindari kehilangan data berharga akibat penghapusan baris, serta menjaga distribusi agar tidak bias.
+> 📌 **Alasan:** Menghindari kesalahan prediksi karena tipe data yang tidak sesuai.
 
 ---
 
