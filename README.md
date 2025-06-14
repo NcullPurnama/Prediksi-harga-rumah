@@ -231,6 +231,8 @@ Proses data preparation bertujuan untuk membersihkan dan menyiapkan data agar da
 
 ---
 
+1. Pre-Cleaning
+
 ### 1. Menghapus Kolom Tidak Relevan
 Beberapa kolom seperti `url`, `title`, `address`, `ads_id`, `year_built`, `building_age`, dan `building_orientation` dihapus karena:
 - Tidak berkontribusi langsung terhadap prediksi harga.
@@ -242,34 +244,33 @@ Beberapa kolom seperti `url`, `title`, `address`, `ads_id`, `year_built`, `build
 
 ---
 
-### 2. Menangani Missing Values
-Beberapa kolom dengan missing values diisi sebagai berikut:
+### 2. Mengubah dtype kolom numerik menjadi integer
+Kolom 'bedrooms', 'bathrooms', 'maid_bedrooms', 'maid_bathrooms','floors', 'building_age', 'garages', 'carports' masih berupa float64, untuk pembuatan model kita ganti tipe datanya menjadi Integer. 
 
-- Kolom numerik seperti `bedrooms`, `bathrooms`, `land_size_m2`, `building_size_m2`, `floors`, `carports` diisi dengan median
-- Kolom kategorikal seperti `certificate`, `property_condition`, dan `furnishing` diisi dengan modus
+![kolom tidak relevan](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/tidak_relevan.jpg)
 
-Teknik yang digunakan:
-- Untuk numerik: diisi dengan **median**
-- Untuk kategorikal: diisi dengan **modus (nilai paling sering)**
-
-![median](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/median.jpg)
-![modus](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/modus.jpg)
-
-> 📌 **Alasan:** Menghindari kehilangan data berharga akibat penghapusan baris, serta menjaga distribusi agar tidak bias.
+> 📌 **Alasan:** Hal ini dilakukan untuk mempermudah dalam pembuatan model.
 
 ---
 
-### 3. Encoding Variabel Kategorikal 
-Kolom seperti `city`, `property_type`, `certificate`, `furnishing`, dan `building_orientation` diubah menjadi numerik menggunakan:
-**One-Hot Encoding** (pd.get_dummies())
-
+### 3. Mengubah dtype kolom kategori menjadi category 
+ kolom 'district', 'city', 'property_type', 'certificate', 'property_condition', 'building_orientation', 'furnishing' kita ubah juga menjadi category
+ 
 ![One Hot](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/one-hot.jpg)
 
-> 📌 **Alasan:** Model machine learning tidak dapat memproses data string secara langsung. Encoding memungkinkan model memahami informasi kategorikal.
+> 📌 **Alasan:** Mempermudah dalam pembuatan model.
 
 ---
 
-### 4. Membagi Dataset
+### 4. membersihkan kolom 'electricity'
+Membersihkan kolom electricity dari teks tambahan dan mengubah ke integer yang siap digunakan untuk pemodelan atau analisis.
+
+![membersihkan](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/elec.jpg)
+
+---
+
+### 5. 
+### . Membagi Dataset
 Dataset dibagi menjadi:
 - **Training Set (80%)**
 - **Testing Set (20%)**
