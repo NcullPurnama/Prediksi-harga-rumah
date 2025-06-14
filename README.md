@@ -2,9 +2,9 @@
 
 ## 📌 Latar Belakang
 
-Ketersediaan hunian yang layak dengan harga terjangkau merupakan salah satu kebutuhan dasar masyarakat, terutama di kawasan perkotaan padat seperti Jabodetabek (Jakarta, Bogor, Depok, Tangerang, dan Bekasi). Wilayah ini merupakan pusat aktivitas ekonomi nasional dan mengalami pertumbuhan penduduk yang tinggi setiap tahunnya.
+Harga rumah di wilayah Jabodetabek terus meningkat seiring dengan meningkatnya kebutuhan tempat tinggal dan pertumbuhan penduduk. Bagi calon pembeli, investor, dan pengembang properti, memprediksi harga rumah secara akurat sangat penting agar dapat mengambil keputusan yang lebih tepat.
 
-Namun demikian, harga rumah di Jabodetabek sangat bervariasi dan cenderung meningkat dari waktu ke waktu. Kenaikan ini dipengaruhi oleh berbagai faktor seperti lokasi, akses transportasi, ukuran lahan, fasilitas umum sekitar, serta legalitas properti. Situasi ini menciptakan tantangan bagi calon pembeli rumah, developer, hingga investor dalam menilai kewajaran harga sebuah properti.
+Menurut Property Market Outlook 2024 oleh Colliers, pasar residensial di Jabodetabek menunjukkan pertumbuhan yang konsisten dengan adanya permintaan dari segmen menengah ke bawah. Data dari Rumah123 juga menunjukkan tren kenaikan harga rumah tahunan sekitar 10–15% di wilayah ini.
 
 Dalam konteks tersebut, pendekatan analitik berbasis data menjadi penting untuk membantu berbagai pihak memprediksi harga rumah secara lebih objektif, akurat, dan efisien. Salah satu pendekatan yang dapat digunakan adalah **Predictive Analytics**, yakni penerapan teknik statistik dan machine learning untuk memperkirakan nilai harga rumah berdasarkan data historis dan karakteristik properti.
 
@@ -12,20 +12,19 @@ Dalam konteks tersebut, pendekatan analitik berbasis data menjadi penting untuk 
 
 ## 🎯 Mengapa Masalah Ini Harus Diselesaikan?
 
-1. **Membantu Akses Terhadap Hunian yang Terjangkau**  
-   Menurut data **Badan Pusat Statistik (BPS)**, backlog (kekurangan) perumahan di Indonesia mencapai lebih dari **12 juta unit** (BPS, 2020). Prediksi harga yang akurat dapat membantu masyarakat dalam merencanakan pembelian rumah dengan lebih baik.
+1. Bagaimana memprediksi harga rumah berdasarkan fitur-fitur seperti lokasi, ukuran tanah, jumlah kamar, dan lainnya?
 
-2. **Transparansi Pasar Properti**  
-   Harga rumah yang ditentukan tanpa dasar data sering kali tidak mencerminkan nilai sebenarnya. Dengan prediksi berbasis data, pasar menjadi lebih transparan, adil, dan efisien.
-
-3. **Pengambilan Keputusan oleh Developer dan Investor**  
-   Developer memerlukan estimasi harga pasar untuk menentukan harga jual, sementara investor membutuhkan data harga untuk mengevaluasi potensi keuntungan investasi properti.
-
-4. **Dukungan Bagi Sektor Keuangan dan Perbankan**  
-   Lembaga keuangan seperti bank perlu menilai **nilai wajar properti** yang dijadikan agunan kredit pemilikan rumah (KPR). Prediksi harga berbasis data membantu proses ini menjadi lebih objektif.
+2. Algoritma machine learning mana yang memberikan akurasi terbaik untuk masalah ini?
 
 ---
 
+##🎯 Goals
+
+1. Menghasilkan model prediksi harga rumah yang akurat dan dapat digunakan untuk membantu proses pengambilan keputusan.
+
+2. Mengevaluasi performa beberapa algoritma dan memilih model terbaik berdasarkan metrik RMSE dan R².
+
+---
 ## 🛠️ Bagaimana Masalah Ini Diselesaikan?
 
 Masalah prediksi harga rumah dapat diselesaikan melalui pendekatan **Predictive Analytics berbasis Machine Learning**, dengan langkah-langkah sebagai berikut:
@@ -232,7 +231,7 @@ Proses data preparation bertujuan untuk membersihkan dan menyiapkan data agar da
 ---
 
 ### 1. Menghapus Kolom Tidak Relevan
-Beberapa kolom seperti `url`, `title`, `address`, `ads_id`, `year_built` dihapus karena:
+Beberapa kolom seperti `url`, `title`, `address`, `ads_id`, `year_built`, `building_age`, dan `building_orientation` dihapus karena:
 - Tidak berkontribusi langsung terhadap prediksi harga.
 - Bersifat unik atau teks bebas yang sulit diolah tanpa NLP khusus.
 
@@ -243,7 +242,10 @@ Beberapa kolom seperti `url`, `title`, `address`, `ads_id`, `year_built` dihapus
 ---
 
 ### 2. Menangani Missing Values
-Beberapa kolom seperti `bedrooms`, `bathrooms`, `land_size_m2`, `building_size_m2`, `floors`, `electricity`, `certificate`, `property_condition`, `furnishing`
+Beberapa kolom dengan missing values diisi sebagai berikut:
+
+- Kolom numerik seperti `bedrooms`, `bathrooms`, `land_size_m2`, `building_size_m2`, `floors`, `carports` diisi dengan median
+- Kolom kategorikal seperti `certificate`, `property_condition`, dan `furnishing` diisi dengan modus
 
 Teknik yang digunakan:
 - Untuk numerik: diisi dengan **median**
@@ -258,8 +260,7 @@ Teknik yang digunakan:
 
 ### 3. Encoding Variabel Kategorikal 
 Kolom seperti `city`, `property_type`, `certificate`, `furnishing`, dan `building_orientation` diubah menjadi numerik menggunakan:
-- **Label Encoding**: jika hanya memiliki sedikit kategori
-- **One-Hot Encoding**: jika jumlah kategori relatif banyak dan tidak ordinal
+**One-Hot Encoding** (pd.get_dummies())
 
 ![One Hot](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/one-hot.jpg)
 
@@ -267,15 +268,7 @@ Kolom seperti `city`, `property_type`, `certificate`, `furnishing`, dan `buildin
 
 ---
 
-### 4. Feature Scaling
-Fitur numerik seperti `land_size_m2`, `building_size_m2`, `electricity`, dan `building_age` dilakukan scaling menggunakan:
-- **StandardScaler** dari `sklearn.preprocessing`
-
-> 📌 **Alasan:** Scaling diperlukan terutama untuk model seperti Linear Regression agar fitur berada pada skala yang sama dan tidak mendominasi perhitungan bobot.
-
----
-
-### 5. Membagi Dataset
+### 4. Membagi Dataset
 Dataset dibagi menjadi:
 - **Training Set (80%)**
 - **Testing Set (20%)**
@@ -307,15 +300,23 @@ Untuk menyelesaikan permasalahan prediksi harga rumah di wilayah Jabodetabek, du
 - **Parameter utama**:
   - `fit_intercept=True`: Menyertakan intercept dalam model.
   - `normalize=False`: Data sudah diskalakan sebelumnya, jadi tidak dilakukan normalisasi ulang.
-
+- **Cara Kerja**: Model ini mempelajari hubungan linier antara fitur dan target.
 > Digunakan sebagai baseline karena sederhana, cepat, dan mudah diinterpretasi.
 
 #### 2. Random Forest Regressor
 - **Library**: `sklearn.ensemble.RandomForestRegressor`
 - **Parameter awal (default)**:
-  - `n_estimators=100`: Jumlah pohon dalam forest
-  - `max_depth=None`: Tidak dibatasi kedalaman
-  - `random_state=42`: Untuk replikasi hasil
+  - n_estimators=100 (Jumlah pohon dalam hutan. Semakin banyak pohon, semakin stabil prediksi (namun lebih lambat))
+  - max_depth=None (Tidak ada batasan kedalaman pohon, memungkinkan model menyesuaikan secara bebas. Bisa meningkatkan akurasi model)
+  - min_samples_split=2(Jumlah minimal sampel untuk membagi node internal. Nilai kecil memberi model lebih banyak fleksibilitas)
+  - min_samples_leaf=1 (Jumlah minimal sampel pada daun pohon. Nilai kecil dapat membuat model sangat kompleks)
+  - max_features='auto' (Menggunakan semua fitur pada regresi)
+  - random_state=42 (Agar hasil yang didapat konsisten dan dapat direproduksi)
+    
+- **Cara Kerja**:
+  - Model ensembel dari banyak decision tree
+  - Mengambil rata-rata prediksi dari banyak pohon untuk menghasilkan prediksi akhir
+  - Mampu menangani relasi non-linear dan data dengan banyak fitur kategorikal/numerik
 
 ---
 
@@ -354,10 +355,6 @@ Evaluasi model dilakukan untuk mengetahui seberapa baik model memprediksi harga 
 ### 📊 Metrik Evaluasi yang Digunakan
 
 1. ### Mean Squared Error (**MSE**)
-   - **Formula**:
-     \[
-     MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
-     \]
    - **Penjelasan**: Mengukur rata-rata kesalahan kuadrat antara nilai aktual \( y_i \) dan prediksi \( \hat{y}_i \). Semakin kecil MSE, semakin akurat model.
    - **Kelebihan**: Memberi penalti besar terhadap kesalahan besar (outlier).
    - **Kekurangan**: Tidak berada dalam satuan yang sama dengan target (Rp), karena dikuadratkan.
@@ -383,8 +380,8 @@ Evaluasi model dilakukan untuk mengetahui seberapa baik model memprediksi harga 
 
 | Model               | MSE              | RMSE             | R² Score         |
 |--------------------|------------------|------------------|------------------|
-| Linear Regression  | tinggi (baseline)| tinggi           | rendah           |
-| Random Forest      | ✅ lebih rendah   | ✅ lebih kecil    | ✅ mendekati 1    |
+| Linear Regression  | 1.17e+18         | 1.08e+09           | 0.6324           |
+| Random Forest      | ✅ 4.92e+17 (lebih rendah)   | ✅ 7.01e+08 (lebih kecil)    | ✅ 0.8043 (mendekati 1)    |
 
 > 🔍 Berdasarkan ketiga metrik tersebut, **Random Forest Regressor** terbukti memiliki performa yang lebih baik dalam memprediksi harga rumah.
 
@@ -393,8 +390,8 @@ Evaluasi model dilakukan untuk mengetahui seberapa baik model memprediksi harga 
 ### 🧠 Kesimpulan
 
 Metrik evaluasi yang digunakan sudah sesuai dengan konteks **prediksi harga numerik** (regresi), dan model terbaik (Random Forest) memiliki:
-- Error absolut lebih rendah (RMSE)
-- Kemampuan menjelaskan variansi harga lebih baik (R² lebih tinggi)
+- RMSE lebih rendah: 701 juta
+- R² Score lebih tinggi: 0.8043
 
 Evaluasi ini menunjukkan bahwa model bisa diandalkan untuk memberikan estimasi harga rumah yang masuk akal, khususnya untuk aplikasi rekomendasi.
 
