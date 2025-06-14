@@ -159,6 +159,8 @@ Beberapa langkah EDA yang dilakukan:
 
 EDA ini membantu memahami pola dan variabel yang paling berkontribusi dalam menentukan harga rumah serta mendeteksi outlier atau missing value yang perlu ditangani sebelum modeling.
 
+![Plot Harga Rumah](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/plot1.png)
+
 ---
 
 ## 🧹 Data Preparation
