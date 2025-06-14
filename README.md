@@ -234,7 +234,7 @@ Proses data preparation bertujuan untuk membersihkan dan menyiapkan data agar da
 1. Pre-Cleaning
 
 ### 1. Menghapus Kolom Tidak Relevan
-Beberapa kolom seperti `url`, `title`, `address`, `ads_id`, `year_built`, `building_age`, dan `building_orientation` dihapus karena:
+Beberapa kolom seperti `url`, `title`, `address`, `ads_id`, dan `year_built` dihapus karena:
 - Tidak berkontribusi langsung terhadap prediksi harga.
 - Bersifat unik atau teks bebas yang sulit diolah tanpa NLP khusus.
 
