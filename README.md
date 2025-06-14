@@ -188,7 +188,7 @@ Proses data preparation bertujuan untuk membersihkan dan menyiapkan data agar da
 ---
 
 ### 1. Menghapus Kolom Tidak Relevan
-Beberapa kolom seperti `url`, `title`, `ads_id`, `facilities`, `lat`, dan `long` dihapus karena:
+Beberapa kolom seperti `url`, `title`, `address`, `ads_id`, `year_built` dihapus karena:
 - Tidak berkontribusi langsung terhadap prediksi harga.
 - Bersifat unik atau teks bebas yang sulit diolah tanpa NLP khusus.
 
@@ -207,16 +207,7 @@ Teknik yang digunakan:
 
 ---
 
-### 3. Encoding Variabel Kategorikal
-Kolom seperti `city`, `property_type`, `certificate`, `furnishing`, dan `building_orientation` diubah menjadi numerik menggunakan:
-- **Label Encoding**: jika hanya memiliki sedikit kategori
-- **One-Hot Encoding**: jika jumlah kategori relatif banyak dan tidak ordinal
-
-> 📌 **Alasan:** Model machine learning tidak dapat memproses data string secara langsung. Encoding memungkinkan model memahami informasi kategorikal.
-
----
-
-### 4. Feature Scaling
+### 3. Feature Scaling
 Fitur numerik seperti `land_size_m2`, `building_size_m2`, `electricity`, dan `building_age` dilakukan scaling menggunakan:
 - **StandardScaler** dari `sklearn.preprocessing`
 
@@ -224,7 +215,7 @@ Fitur numerik seperti `land_size_m2`, `building_size_m2`, `electricity`, dan `bu
 
 ---
 
-### 5. Membagi Dataset
+### 4. Membagi Dataset
 Dataset dibagi menjadi:
 - **Training Set (80%)**
 - **Testing Set (20%)**
