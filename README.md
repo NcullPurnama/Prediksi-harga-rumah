@@ -236,6 +236,8 @@ Beberapa kolom seperti `url`, `title`, `address`, `ads_id`, `year_built` dihapus
 - Tidak berkontribusi langsung terhadap prediksi harga.
 - Bersifat unik atau teks bebas yang sulit diolah tanpa NLP khusus.
 
+![kolom tidak relevan](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/tidak_relevan.jpg)
+
 > 📌 **Alasan:** Kolom tersebut dapat menambah noise dalam data dan meningkatkan kompleksitas model tanpa manfaat yang signifikan.
 
 ---
@@ -247,6 +249,9 @@ Teknik yang digunakan:
 - Untuk numerik: diisi dengan **median**
 - Untuk kategorikal: diisi dengan **modus (nilai paling sering)**
 
+![median](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/median.jpg)
+![modus](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/modus.jpg)
+
 > 📌 **Alasan:** Menghindari kehilangan data berharga akibat penghapusan baris, serta menjaga distribusi agar tidak bias.
 
 ---
@@ -255,6 +260,8 @@ Teknik yang digunakan:
 Kolom seperti `city`, `property_type`, `certificate`, `furnishing`, dan `building_orientation` diubah menjadi numerik menggunakan:
 - **Label Encoding**: jika hanya memiliki sedikit kategori
 - **One-Hot Encoding**: jika jumlah kategori relatif banyak dan tidak ordinal
+
+![One Hot](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/one-hot.jpg)
 
 > 📌 **Alasan:** Model machine learning tidak dapat memproses data string secara langsung. Encoding memungkinkan model memahami informasi kategorikal.
 
@@ -274,6 +281,8 @@ Dataset dibagi menjadi:
 - **Testing Set (20%)**
 
 Menggunakan `train_test_split` dari `sklearn.model_selection` dengan parameter `random_state` agar hasil replikasi konsisten.
+
+![membagi dataset](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/membagi.jpg)
 
 > 📌 **Alasan:** Pembagian ini penting untuk mengukur performa model terhadap data yang tidak dilatih.
 
