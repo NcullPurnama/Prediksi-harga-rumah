@@ -161,9 +161,10 @@ EDA ini membantu memahami pola dan variabel yang paling berkontribusi dalam mene
 
 ---
 
-Berikut adalah hasil EDA dari dataset yang dipakai
+### Plot Distribusi Carport
 
-![distribusi carport](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_carport.png)
+![Distribusi Carport](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/carport_plot.png)
+
 
 ---
 
