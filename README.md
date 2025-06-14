@@ -180,3 +180,60 @@ Beberapa langkah EDA yang dilakukan:
 ---
 
 EDA ini membantu memahami pola dan variabel yang paling berkontribusi dalam menentukan harga rumah serta mendeteksi outlier atau missing value yang perlu ditangani sebelum modeling.
+
+## 🧹 Data Preparation
+
+Proses data preparation bertujuan untuk membersihkan dan menyiapkan data agar dapat digunakan oleh model machine learning secara optimal. Berikut adalah tahapan yang dilakukan secara berurutan:
+
+---
+
+### 1. Menghapus Kolom Tidak Relevan
+Beberapa kolom seperti `url`, `title`, `ads_id`, `facilities`, `lat`, dan `long` dihapus karena:
+- Tidak berkontribusi langsung terhadap prediksi harga.
+- Bersifat unik atau teks bebas yang sulit diolah tanpa NLP khusus.
+
+> 📌 **Alasan:** Kolom tersebut dapat menambah noise dalam data dan meningkatkan kompleksitas model tanpa manfaat yang signifikan.
+
+---
+
+### 2. Menangani Missing Values
+Beberapa kolom seperti `building_age`, `property_condition`, `furnishing`, dan `building_orientation` memiliki nilai kosong (`NaN`).
+
+Teknik yang digunakan:
+- Untuk numerik: diisi dengan **median**
+- Untuk kategorikal: diisi dengan **modus (nilai paling sering)**
+
+> 📌 **Alasan:** Menghindari kehilangan data berharga akibat penghapusan baris, serta menjaga distribusi agar tidak bias.
+
+---
+
+### 3. Encoding Variabel Kategorikal
+Kolom seperti `city`, `property_type`, `certificate`, `furnishing`, dan `building_orientation` diubah menjadi numerik menggunakan:
+- **Label Encoding**: jika hanya memiliki sedikit kategori
+- **One-Hot Encoding**: jika jumlah kategori relatif banyak dan tidak ordinal
+
+> 📌 **Alasan:** Model machine learning tidak dapat memproses data string secara langsung. Encoding memungkinkan model memahami informasi kategorikal.
+
+---
+
+### 4. Feature Scaling
+Fitur numerik seperti `land_size_m2`, `building_size_m2`, `electricity`, dan `building_age` dilakukan scaling menggunakan:
+- **StandardScaler** dari `sklearn.preprocessing`
+
+> 📌 **Alasan:** Scaling diperlukan terutama untuk model seperti Linear Regression agar fitur berada pada skala yang sama dan tidak mendominasi perhitungan bobot.
+
+---
+
+### 5. Membagi Dataset
+Dataset dibagi menjadi:
+- **Training Set (80%)**
+- **Testing Set (20%)**
+
+Menggunakan `train_test_split` dari `sklearn.model_selection` dengan parameter `random_state` agar hasil replikasi konsisten.
+
+> 📌 **Alasan:** Pembagian ini penting untuk mengukur performa model terhadap data yang tidak dilatih.
+
+---
+
+Dengan urutan preprocessing di atas, dataset menjadi bersih, konsisten, dan siap digunakan untuk pelatihan model prediktif.
+
