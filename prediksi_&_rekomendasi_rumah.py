@@ -7,6 +7,8 @@ Original file is located at
     https://colab.research.google.com/drive/1_uU2wzA0mAyqa57OWL-7fBHbcbsdIizr
 
 # Library
+
+Pertama kita import library yang dibutuhkan untuk membuat model prediksi harga rumah
 """
 
 import pandas as pd
@@ -43,7 +45,12 @@ df = pd.read_csv('jabodetabek_house_price.csv')
 print("Number of rows:", df.shape[0])
 print("Number of columns:", df.shape[1])
 
-"""# Exploratory Data Analysis (EDA)
+"""Insight
+
+---
+Dari code diatas dapat kita ketahui kalau dataset yang digunakan terdiri dari 3553 data dan 27 kolom
+
+# Exploratory Data Analysis (EDA)
 
 Exploratory data analysis merupakan proses investigasi awal pada data untuk menganalisis karakteristik, menemukan pola, anomali, dan memeriksa asumsi pada data. Teknik ini biasanya menggunakan bantuan statistik dan representasi grafis atau visualisasi.
 """
@@ -63,18 +70,23 @@ df.duplicated().sum()
 """Insight
 ---
 
-Dari info diatas, tidak terdapat data duplikat pada dataset
+Dari info diatas, tidak terdapat data duplikat pada dataset, namun sepertinya masih ada data yanag kosong
 
 # **Pre cleaning**
 """
 
 df_clean = df.copy()
 
+"""Kolom 'url', 'title', 'address', 'ads_id', 'year_built' tidak relevan untuk membuat model, oleh karena itu kita drop kolomnya"""
+
 # Drop kolom yang tidak relevan untuk prediksi harga
 drop_cols = ['url', 'title', 'address', 'ads_id', 'year_built']
 df_clean.drop(columns=drop_cols, inplace=True)
 
-"""## Memperbaiki tipedata"""
+"""## Memperbaiki tipe data
+
+Dari info df diatas dapat kita lihat kalau kolom 'bedrooms', 'bathrooms', 'maid_bedrooms', 'maid_bathrooms','floors', 'building_age', 'garages', 'carports' masih berupa float64, untuk pembuatan model kita ganti tipe datanya menjadi Integer
+"""
 
 # Kolom numerik yang harusnya integer
 int_cols = [
@@ -83,6 +95,8 @@ int_cols = [
 ]
 for col in int_cols:
     df_clean[col] = df_clean[col].astype('Int64')
+
+"""Dan untuk kolom 'district', 'city', 'property_type', 'certificate', 'property_condition', 'building_orientation', 'furnishing'kita ubah juga menjadi category"""
 
 # Kolom kategori
 cat_cols = [
@@ -101,6 +115,8 @@ df_clean.info()
 print("Kolom setelah pre-cleaning:")
 print(df_clean.columns.tolist())
 
+"""Setelah selesai memperbaiki tipe data, maka kolom 'price_in_rp', 'district', 'city', 'lat', 'long', 'facilities', 'property_type', 'bedrooms', 'bathrooms', 'land_size_m2', 'building_size_m2', 'carports', 'certificate', 'electricity', 'maid_bedrooms', 'maid_bathrooms', 'floors', 'building_age', 'property_condition', 'building_orientation', 'garages', 'furnishing' siap digunakan dalam pembuatan model"""
+
 # Mengambil salah satu kolom secara acak
 
 pd.set_option('display.max_columns', None)
@@ -118,7 +134,13 @@ plt.xlabel('Harga (Rp)')
 plt.ylabel('Jumlah Properti')
 plt.show()
 
-"""## **Distribusi numerik**"""
+"""insight
+
+---
+Dari plot diatas dapat kita lihat grafik distribusi harga rumah menunjukkan bahwa mayoritas rumah yang dijual berada pada rentang harga di bawah Rp 10 miliar. Distribusi bersifat miring ke kanan (right-skewed), dengan sedikit rumah yang memiliki harga ekstrem hingga mencapai lebih dari Rp 100 miliar. Hal ini mengindikasikan adanya outlier dalam data, serta pentingnya mempertimbangkan transformasi data seperti logaritma saat membangun model prediksi agar performa model tidak terdistorsi oleh harga ekstrem.
+
+## **Distribusi numerik**
+"""
 
 numeric_cols = ['bedrooms', 'bathrooms', 'land_size_m2', 'building_size_m2',
                 'carports', 'floors', 'maid_bedrooms', 'maid_bathrooms',
@@ -132,7 +154,40 @@ for col in numeric_cols:
     plt.ylabel('Jumlah Properti')
     plt.show()
 
-"""## **Fitur Kategorikal**"""
+"""Insight
+
+---
+
+- plot kamar tidur
+> Mayoritas rumah memiliki 2 hingga 3 kamar tidur. Distribusi relatif normal, namun terdapat sedikit rumah dengan jumlah kamar ekstrem (>6), yang menunjukkan variasi pada segmen properti skala besar.
+
+
+- plot kamar mandi
+> Rumah umumnya memiliki 1–2 kamar mandi. Outlier terjadi pada rumah dengan 5 atau lebih kamar mandi, yang kemungkinan merupakan properti mewah atau komersial.
+
+- plot luas tanah
+> Sebagian besar rumah memiliki luas tanah di bawah 200 m². Distribusi ini juga miring ke kanan, dengan outlier berupa rumah yang memiliki lahan sangat luas (>1000 m²). Ini mencerminkan adanya variasi tinggi pada segmen properti lahan besar yang perlu ditangani dalam modeling.
+
+- plot luas bangunan
+> Rumah umumnya memiliki luas bangunan antara 50 hingga 250 m². Beberapa properti dengan luas lebih dari 500 m² teridentifikasi sebagai outlier. Distribusi ini memperkuat pentingnya normalisasi atau transformasi saat pelatihan model prediktif.
+
+- plot carports dan plot garasi
+> Rumah pada umumnya memiliki 1 carport atau garasi. Properti dengan lebih dari 2 carport sangat jarang, menunjukkan bahwa fitur ini cukup spesifik untuk rumah mewah atau kavling besar.
+
+- plot lantai
+> Distribusi jumlah lantai menunjukkan bahwa mayoritas rumah adalah bertingkat 1 atau 2. Rumah dengan lebih dari 3 lantai sangat jarang, dan kemungkinan termasuk properti khusus seperti kos atau bangunan campuran.
+
+- plot kamar ART dan plot kamar mandi ART
+> Sebagian besar rumah tidak memiliki kamar khusus ART. Jika pun ada, jumlahnya 1 atau 2. Ini menunjukkan fitur ini lebih relevan untuk properti kelas atas.
+
+- plot electicity
+> Daya listrik rumah paling umum adalah antara 1.300 VA hingga 2.200 VA. Daya sangat tinggi (>4.400 VA) hanya dimiliki oleh sebagian kecil rumah, yang kemungkinan dilengkapi dengan fasilitas elektronik premium.
+
+- plot umur bangunan
+> Sebagian besar rumah berusia antara 0–20 tahun. Rumah dengan usia sangat tua (>40 tahun) sangat jarang dan dapat memengaruhi kondisi properti dan harga jualnya.
+
+## **Fitur Kategorikal**
+"""
 
 categorical_cols = ['city', 'district', 'property_type', 'certificate',
                     'property_condition', 'furnishing']
@@ -145,7 +200,28 @@ for col in categorical_cols:
     plt.ylabel('Jumlah Properti')
     plt.show()
 
-"""# **EDA Multivariate**
+"""Insight
+
+---
+- plot kota
+> Kota dengan jumlah properti terbanyak adalah Bekasi dan Tangerang, disusul oleh Depok dan Jakarta. Ini menunjukkan ekspansi pasar properti di wilayah penyangga Ibu Kota.
+
+- plot distrik
+> Sebaran wilayah memperlihatkan konsentrasi listing rumah pada wilayah pinggiran
+
+- plot tipe
+> hanya ada 1 variabel yaitu "rumah"
+
+- plot sertifikat
+> SHM (Sertifikat Hak Milik) merupakan sertifikat yang paling banyak ditemukan, menunjukkan legalitas properti yang kuat dan siap transaksi.
+
+- plot kondisi
+> Sebagian besar rumah dikategorikan dalam kondisi “Bagus”. Ini mencerminkan upaya pemilik atau agen untuk menampilkan properti dalam kondisi layak huni.
+
+- plot furnishing
+> Rumah unfurnished mendominasi iklan properti, disusul oleh semi-furnished. Furnished hanya sebagian kecil, biasanya ditujukan untuk apartemen atau rumah siap huni.
+
+# **EDA Multivariate**
 
 ## **Korelasi matriks**
 """
@@ -156,7 +232,13 @@ sns.heatmap(corr, annot=True, fmt=".2f", cmap="coolwarm", square=True, linewidth
 plt.title('Matriks Korelasi Fitur Numerik')
 plt.show()
 
-"""## **harga rata rata perkota**"""
+"""insight
+
+---
+Dari plot heatmap diatas dapat kita lihat ada hubungan erat antara 'price_in_rp' dengan 'building_size_m2' (0.49) dan ectricity (0.44). Dan juga antara 'building_size_m2' dengan 'electricity' (0.67) yang menunjukan bahwa makin besar sebuah bangunan, semakin besar juga listrik yang dibutuhkan
+
+## **harga rata rata perkota**
+"""
 
 plt.figure(figsize=(10, 4))
 avg_price_city = df_clean.groupby('city')['price_in_rp'].mean().sort_values(ascending=False)
@@ -166,7 +248,14 @@ plt.ylabel('Harga (Rp)')
 plt.xticks(rotation=45)
 plt.show()
 
-"""## **Harga rata rata berdasarkan kondisi properti**"""
+"""Insight
+
+---
+
+Berdasarkan grafik harga rata-rata rumah per kota, terlihat bahwa Jakarta Pusat memiliki nilai properti tertinggi, disusul oleh Jakarta Selatan dan Jakarta Utara. Sementara itu, kota-kota satelit seperti Bekasi, Depok, dan Bogor memiliki rata-rata harga yang jauh lebih rendah, mengindikasikan bahwa kawasan tersebut menjadi pilihan utama bagi pembeli rumah dengan budget terbatas. Hal ini menegaskan adanya disparitas harga antar wilayah yang signifikan di Jabodetabek.
+
+## **Harga rata rata berdasarkan kondisi properti**
+"""
 
 plt.figure(figsize=(8, 4))
 avg_price_type = df_clean.groupby('property_condition')['price_in_rp'].mean().sort_values(ascending=False)
@@ -176,7 +265,14 @@ plt.ylabel('Harga (Rp)')
 plt.xticks(rotation=45)
 plt.show()
 
-"""## **scatter ukuran vs harga**"""
+"""Insight
+
+---
+
+Dari plot diatas dapat kita lihat kalau harga rata-rata tertinggi dimiliki oleh properti yang membutuhkan renovasi. Hal ini mengindikasikan bahwa lokasi dan ukuran properti bisa jauh lebih menentukan harga dibandingkan kondisi fisik saat ini. Properti dalam kondisi “bagus sekali” dan “bagus” juga memiliki nilai tinggi, sejalan dengan ekspektasi. Sebaliknya, properti “baru”, “semi-furnished”, dan “unfurnished” memiliki harga rata-rata lebih rendah, kemungkinan besar karena berlokasi di kawasan dengan harga tanah lebih murah atau segmentasi pasar yang lebih rendah.
+
+## **scatter ukuran vs harga**
+"""
 
 plt.figure(figsize=(10, 5))
 sns.scatterplot(data=df_clean, x='land_size_m2', y='price_in_rp', hue='city')
@@ -186,28 +282,47 @@ plt.ylabel('Harga Rumah (Rp)')
 plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
 plt.show()
 
-"""# Data Preparation
+"""Insight
+
+---
+
+Grafik Luas Tanah vs Harga Rumah menunjukkan bahwa terdapat hubungan positif antara luas lahan dan harga rumah, meskipun tidak bersifat linier. Beberapa properti berharga tinggi meskipun memiliki lahan kecil, terutama di Jakarta Pusat dan Selatan, menandakan bahwa lokasi menjadi faktor dominan. Sebaliknya, rumah dengan luas tanah besar di wilayah seperti Bogor dan Tangerang cenderung memiliki harga yang lebih rendah. Hal ini mengindikasikan bahwa strategi prediksi harga rumah perlu mempertimbangkan interaksi antara ukuran fisik dan lokasi properti.
+
+# Data Preparation
 
 ## **handling missing value**
 """
 
 df_clean.isnull().sum()
 
+"""karena missing value kolom 'building_age' dan 'building_orientation' lebih banyak jadi kita bisa melakukan drop kolom"""
+
 # Drop kolom dengan missing value > 40%
 df_clean.drop(columns=['building_age', 'building_orientation'], inplace=True)
 
+"""dan juga untuk 'property_type' yang missing valuenya 1, kita juga bisa drop 1 baris yang memiliki missing value"""
+
 # Drop baris dengan missing kecil
 df_clean.dropna(subset=['property_type'], inplace=True)
+
+"""kita bisa menggunakan median untuk kolom numerik yuang memiliki missing value"""
 
 # Imputasi numerik dengan median
 median_cols = ['bedrooms', 'bathrooms', 'land_size_m2', 'building_size_m2', 'floors', 'electricity']
 for col in median_cols:
     df_clean[col].fillna(df_clean[col].median(), inplace=True)
 
-# Imputasi kategorik dengan mode
+"""sedangkan untuk kolom kategori, kita bisa menggunakan modus"""
+
+# Imputasi kategorik dengan modus
 mode_cols = ['certificate', 'property_condition', 'furnishing']
 for col in mode_cols:
     df_clean[col].fillna(df_clean[col].mode()[0], inplace=True)
+
+"""Mengapa kolom numerik menggunakan median dan ketegori menggunakan modus ?
+
+Untuk menghindari kehilangan data berharga akibat penghapusan baris, serta menjaga distribusi agar tidak bias. Oleh karena itu kita menggunakan median dan modus
+"""
 
 df_clean.isnull().sum()
 
@@ -247,14 +362,27 @@ df_model = df_model.drop(columns=[
     'price_in_rp', 'facilities', 'lat', 'long', 'district'
 ])
 
-"""## Splitting"""
+"""## Splitting
+
+Untuk membuat model, kita membagi data menjadi 2 yaitu data training (80%) dan data testing (20%)
+"""
 
 X = df_model.drop(columns='price_log')
 y = df_model['price_log']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-"""# Build Model"""
+"""# Build Model
+
+Untuk perbandingan, saya membuat model menggunakan 2 algoritma
+- Linear Regression
+- Random Forest
+
+Mengapa menggunakan Linear Regression dan Random Forest ?
+> Linear Regression digunakan sebagai baseline karena sederhana, cepat, dan mudah diinterpretasi
+
+>Random Forest digunakan karena memiliki kelebihan, yaitu Akurat untuk data non-linear dan Tidak rentan overfitting
+"""
 
 lr = LinearRegression(
     fit_intercept=True,
@@ -296,7 +424,14 @@ print(f"Random Forest R²: {r2_rf}")
 
 ---
 
-Bisa dilihat dari evaluasi diatas, hasil dari Random Forest lebih bagus daripada Linear Regression
+Bisa dilihat dari evaluasi diatas, hasil yang didapat adalah
+
+| Model               | RMSE         | R² Score  |
+|---------------------|--------------|-----------|
+| Linear Regression   | 1.08e+09     | 0.6324    |
+| Random Forest       | 7.01e+08     | 0.8043    |
+
+Dari tabel diatas, dapat dibuktikan kalau Random Forest bagus untuk dijadikan alogirma model
 
 ## **Visualisasi**
 """
@@ -353,7 +488,10 @@ def recommend_houses(budget, df_original, top_n=5, tolerance=0.10):
     return filtered[['district', 'city', 'bedrooms', 'bathrooms', 'land_size_m2',
                      'building_size_m2', 'price_in_rp', 'certificate', 'furnishing']]
 
-"""## Model Testing"""
+"""## Model Testing
+
+pada code ini saya akan mencoba testing, apakah model dapat merekomendasikan sesuai harga yang user input
+"""
 
 budget_user = input("Masukkan budget Anda (dalam Rupiah): ")
 
