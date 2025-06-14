@@ -247,7 +247,7 @@ Beberapa kolom seperti `url`, `title`, `address`, `ads_id`, `year_built`, `build
 ### 2. Mengubah dtype kolom numerik menjadi integer
 Kolom 'bedrooms', 'bathrooms', 'maid_bedrooms', 'maid_bathrooms','floors', 'building_age', 'garages', 'carports' masih berupa float64, untuk pembuatan model kita ganti tipe datanya menjadi Integer. 
 
-![kolom tidak relevan](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/tidak_relevan.jpg)
+![integer](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/integer.jpg)
 
 > 📌 **Alasan:** Hal ini dilakukan untuk mempermudah dalam pembuatan model.
 
@@ -256,21 +256,53 @@ Kolom 'bedrooms', 'bathrooms', 'maid_bedrooms', 'maid_bathrooms','floors', 'buil
 ### 3. Mengubah dtype kolom kategori menjadi category 
  kolom 'district', 'city', 'property_type', 'certificate', 'property_condition', 'building_orientation', 'furnishing' kita ubah juga menjadi category
  
-![One Hot](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/one-hot.jpg)
+![category](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambarcategory.jpg)
 
 > 📌 **Alasan:** Mempermudah dalam pembuatan model.
 
 ---
 
-### 4. membersihkan kolom 'electricity'
+### 4. Membersihkan kolom 'electricity'
 Membersihkan kolom electricity dari teks tambahan dan mengubah ke integer yang siap digunakan untuk pemodelan atau analisis.
 
 ![membersihkan](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/elec.jpg)
 
 ---
 
-### 5. 
-### . Membagi Dataset
+### 5. Drop kolom dengan missing value >40%
+Membersihkan kolom dengan data kosong >40% dilakukan untuk mempermudah dalam pembuatan model. Jika menggunakan median atau modus bisa jadi akan menimbulkan outlier
+
+![missing](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/missing_value.jpg)
+
+### 5. Drop baris dengan missing kecil
+Drop baris dengan missing kecil dilakukan karena jumlah jumlah missing valuenya terlalu kecil, maka dari itu kita drop saja
+
+![1 baris](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/1_baris.jpg)
+
+### 6. Menangani Missing Values
+Beberapa kolom dengan missing values diisi sebagai berikut:
+
+- Kolom numerik seperti bedrooms, bathrooms, land_size_m2, building_size_m2, floors, carports diisi dengan median
+- Kolom kategorikal seperti certificate, property_condition, dan furnishing diisi dengan modus
+
+Teknik yang digunakan:
+- Untuk numerik: diisi dengan *median*
+- Untuk kategorikal: diisi dengan *modus (nilai paling sering)*
+
+![median](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/median.jpg)
+![modus](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/modus.jpg)
+
+> 📌 *Alasan:* Menghindari kehilangan data berharga akibat penghapusan baris, serta menjaga distribusi agar tidak bias.
+
+### 7. Encoding Variabel Kategorikal 
+Kolom seperti city, property_type, certificate, furnishing, dan building_orientation diubah menjadi numerik menggunakan:
+*One-Hot Encoding* (pd.get_dummies())
+
+![One Hot](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/one-hot.jpg)
+
+> 📌 *Alasan:* Model machine learning tidak dapat memproses data string secara langsung. Encoding memungkinkan model memahami informasi kategorikal.
+
+### 8. Membagi Dataset
 Dataset dibagi menjadi:
 - **Training Set (80%)**
 - **Testing Set (20%)**
@@ -301,19 +333,22 @@ Untuk menyelesaikan permasalahan prediksi harga rumah di wilayah Jabodetabek, du
 - **Library**: `sklearn.linear_model.LinearRegression`
 - **Parameter utama**:
   - `fit_intercept=True`: Menyertakan intercept dalam model.
-  - `normalize=False`: Data sudah diskalakan sebelumnya, jadi tidak dilakukan normalisasi ulang.
+  -  `copy_X=True`      : Menentukan apakah data input X akan disalin sebelum fitting model.
+  -  `n_jobs=None`      : Menentukan jumlah thread/CPU yang digunakan untuk komputasi saat fitting.
+  -  `Positive=False`   : koefisien regresi (weights) tidak dibatasi boleh positif maupun negatif
 - **Cara Kerja**: Model ini mempelajari hubungan linier antara fitur dan target.
 > Digunakan sebagai baseline karena sederhana, cepat, dan mudah diinterpretasi.
 
 #### 2. Random Forest Regressor
 - **Library**: `sklearn.ensemble.RandomForestRegressor`
 - **Parameter awal (default)**:
-  - n_estimators=100 (Jumlah pohon dalam hutan. Semakin banyak pohon, semakin stabil prediksi (namun lebih lambat))
-  - max_depth=None (Tidak ada batasan kedalaman pohon, memungkinkan model menyesuaikan secara bebas. Bisa meningkatkan akurasi model)
-  - min_samples_split=2(Jumlah minimal sampel untuk membagi node internal. Nilai kecil memberi model lebih banyak fleksibilitas)
-  - min_samples_leaf=1 (Jumlah minimal sampel pada daun pohon. Nilai kecil dapat membuat model sangat kompleks)
-  - max_features='auto' (Menggunakan semua fitur pada regresi)
-  - random_state=42 (Agar hasil yang didapat konsisten dan dapat direproduksi)
+  - `n_estimators=100`     : Jumlah pohon dalam hutan. Semakin banyak pohon, semakin stabil prediksi (namun lebih lambat)
+  - `max_depth=None`       : Tidak ada batasan kedalaman pohon, memungkinkan model menyesuaikan secara bebas. Bisa meningkatkan akurasi model
+  - `min_samples_split=2`  : Jumlah minimal sampel untuk membagi node internal. Nilai kecil memberi model lebih banyak fleksibilitas
+  - `min_samples_leaf=1`   : Jumlah minimal sampel pada daun pohon. Nilai kecil dapat membuat model sangat kompleks
+  - `max_features='sqrt'`  : Cocok jika kamu ingin model lebih cepat dan tidak terlalu overfit
+  - `random_state=42`      : Agar hasil yang didapat konsisten dan dapat direproduksi
+  - `n_jobs=-1`            : Jalankan semua core CPU yang tersedia pada komputer untuk mempercepat proses (fit, prediksi, scoring, dsb).
     
 - **Cara Kerja**:
   - Model ensembel dari banyak decision tree
