@@ -161,9 +161,66 @@ EDA ini membantu memahami pola dan variabel yang paling berkontribusi dalam mene
 
 ---
 
-### Plot Distribusi Carport
+## 📈 Visualisasi Distribusi Fitur Numerik
 
-![Distribusi Carport](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/carport_plot.png)
+### Distribusi Luas Tanah
+![Distribusi Luas Tanah](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_luas_tanah.png)
+
+### Distribusi Luas Bangunan
+![Distribusi Luas Bangunan](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_luas_bangunan.png)
+
+### Distribusi Jumlah Lantai
+![Distribusi Lantai](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_lantai.png)
+
+### Distribusi Listrik
+![Distribusi Listrik](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_listrik.png)
+
+### Distribusi Carport
+![Distribusi Carport](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_carport.png)
+
+### Distribusi Garasi
+![Distribusi Garasi](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_garasi.png)
+
+### Distribusi Jumlah Kamar
+![Distribusi Kamar](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_kamar.png)
+
+### Distribusi Jumlah Kamar Mandi
+![Distribusi Kamar Mandi](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_kamar_mandi.png)
+
+### Distribusi Kamar ART
+![Distribusi Kamar ART](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_kamar_ART.png)
+
+### Distribusi Harga Rumah
+![Distribusi Harga Rumah](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_harga_rumah.png)
+
+---
+
+## Visualisasi Distribusi Fitur Kategorikal
+
+### Tipe Furnishing
+![Distribusi Furnishing](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_kategori_furnishing.png)
+
+### Kondisi Properti
+![Distribusi Kondisi Properti](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_kategori_kondisi.png)
+
+### Kota
+![Distribusi Kota](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_kategori_kota.png)
+
+### Sertifikat
+![Distribusi Sertifikat](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_kategori_sertifikat.png)
+
+### Tipe Properti
+![Distribusi Tipe Properti](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_kategori_tipe.png)
+
+### Wilayah
+![Distribusi Wilayah](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_kategori_wilayah.png)
+
+---
+
+## Heatmap Korelasi
+
+### Korelasi Antar Variabel Numerik
+![Heatmap Korelasi](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/heatmap.png)
 
 
 ---
