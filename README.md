@@ -1,6 +1,6 @@
 # Analisis Prediktif Harga Rumah di Jabodetabek
 
-## 📌 Latar Belakang
+## 📌 Domain Proyek: Ekonomi
 
 Harga rumah di wilayah Jabodetabek terus meningkat seiring dengan meningkatnya kebutuhan tempat tinggal dan pertumbuhan penduduk. Bagi calon pembeli, investor, dan pengembang properti, memprediksi harga rumah secara akurat sangat penting agar dapat mengambil keputusan yang lebih tepat.
 
@@ -10,7 +10,8 @@ Dalam konteks tersebut, pendekatan analitik berbasis data menjadi penting untuk 
 
 ---
 
-## 🎯 Mengapa Masalah Ini Harus Diselesaikan?
+## Business Understanding
+🎯 Mengapa Masalah Ini Harus Diselesaikan?
 
 1. Bagaimana memprediksi harga rumah berdasarkan fitur-fitur seperti lokasi, ukuran tanah, jumlah kamar, dan lainnya?
 
@@ -18,14 +19,14 @@ Dalam konteks tersebut, pendekatan analitik berbasis data menjadi penting untuk 
 
 ---
 
-##🎯 Goals
+🎯 Goals
 
 1. Menghasilkan model prediksi harga rumah yang akurat dan dapat digunakan untuk membantu proses pengambilan keputusan.
 
 2. Mengevaluasi performa beberapa algoritma dan memilih model terbaik berdasarkan metrik RMSE dan R².
 
 ---
-## 🛠️ Bagaimana Masalah Ini Diselesaikan?
+🛠️ Bagaimana Masalah Ini Diselesaikan?
 
 Masalah prediksi harga rumah dapat diselesaikan melalui pendekatan **Predictive Analytics berbasis Machine Learning**, dengan langkah-langkah sebagai berikut:
 
@@ -53,7 +54,7 @@ Masalah prediksi harga rumah dapat diselesaikan melalui pendekatan **Predictive 
 
 ---
 
-## 💡 Solution Statements
+💡 Solution Statements
 
 Untuk mencapai tujuan prediksi harga rumah secara akurat, solusi yang diimplementasikan dalam proyek ini adalah sebagai berikut:
 
