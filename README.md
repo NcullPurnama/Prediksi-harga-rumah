@@ -295,7 +295,12 @@ Teknik yang digunakan:
 
 > 📌 *Alasan:* Menghindari kehilangan data berharga akibat penghapusan baris, serta menjaga distribusi agar tidak bias.
 
-### 7. Encoding Variabel Kategorikal 
+### 7. Membuat kolom baru untuk Price
+Price_log dibuat dari kolom price_in_rp agar model mudah belajar dan data tidak skewed.
+
+![price](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/price_in_rp.jpg)
+
+### 8. Encoding Variabel Kategorikal 
 Kolom seperti city, property_type, certificate, furnishing, dan building_orientation diubah menjadi numerik menggunakan:
 *One-Hot Encoding* (pd.get_dummies())
 
@@ -303,7 +308,14 @@ Kolom seperti city, property_type, certificate, furnishing, dan building_orienta
 
 > 📌 *Alasan:* Model machine learning tidak dapat memproses data string secara langsung. Encoding memungkinkan model memahami informasi kategorikal.
 
-### 8. Membagi Dataset
+### 9. Mengecek kembali kolom yang tidak digunakan dalam pembuatan model 
+Kolom seperti 'price_in_rp', 'facilities', 'lat', 'long', 'district'. di drop karena dianggap tidak digunakan dalam pembuatan model. price_in_rp di drop karena sudah ada kolom baru bernama 'price_log'
+
+![drop](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/drop.jpg)
+
+> 📌 *Alasan:* model mudah belajar dan data tidak skewed.
+
+### 10. Membagi Dataset
 Dataset dibagi menjadi:
 - **Training Set (80%)**
 - **Testing Set (20%)**
