@@ -228,3 +228,57 @@ Menggunakan `train_test_split` dari `sklearn.model_selection` dengan parameter `
 
 Dengan urutan preprocessing di atas, dataset menjadi bersih, konsisten, dan siap digunakan untuk pelatihan model prediktif.
 
+
+## 🤖 Machine Learning Modeling
+
+Untuk menyelesaikan permasalahan prediksi harga rumah di wilayah Jabodetabek, dua algoritma digunakan dan dibandingkan, yaitu:
+
+1. **Linear Regression** sebagai baseline model
+2. **Random Forest Regressor** sebagai model yang mampu menangkap relasi non-linear
+
+---
+
+### 🔍 Tahapan dan Parameter Model
+
+#### 1. Linear Regression
+- **Library**: `sklearn.linear_model.LinearRegression`
+- **Parameter utama**:
+  - `fit_intercept=True`: Menyertakan intercept dalam model.
+  - `normalize=False`: Data sudah diskalakan sebelumnya, jadi tidak dilakukan normalisasi ulang.
+
+> Digunakan sebagai baseline karena sederhana, cepat, dan mudah diinterpretasi.
+
+#### 2. Random Forest Regressor
+- **Library**: `sklearn.ensemble.RandomForestRegressor`
+- **Parameter awal (default)**:
+  - `n_estimators=100`: Jumlah pohon dalam forest
+  - `max_depth=None`: Tidak dibatasi kedalaman
+  - `random_state=42`: Untuk replikasi hasil
+
+---
+
+### ⚖️ Kelebihan dan Kekurangan Algoritma
+
+| Algoritma               | Kelebihan                                                                 | Kekurangan                                                              |
+|------------------------|---------------------------------------------------------------------------|-------------------------------------------------------------------------|
+| **Linear Regression**   | - Cepat dan efisien<br>- Mudah diinterpretasi                             | - Tidak mampu menangani relasi non-linear<br>- Rentan terhadap outlier |
+| **Random Forest**       | - Akurat untuk data non-linear<br>- Tidak rentan overfitting              | - Lebih lambat dari linear regression<br>- Sulit diinterpretasi secara langsung |
+
+---
+
+### 🏆 Pemilihan Model Terbaik
+
+#### 📈 Evaluasi Model
+
+| Model               | MSE (lebih kecil lebih baik) | RMSE | R² Score (lebih tinggi lebih baik) |
+|--------------------|------------------------------|------|-------------------------------------|
+| Linear Regression  | ~ tinggi (baseline)          | ~    | ~ rendah                            |
+| Random Forest      | ✅ lebih rendah               | ✅   | ✅ lebih tinggi                     |
+
+> **Random Forest Regressor dipilih sebagai model terbaik** karena menghasilkan nilai R² dan RMSE yang jauh lebih baik dibandingkan baseline Linear Regression.
+
+---
+
+### ✅ Kesimpulan Pemodelan
+
+Random Forest mampu menangkap kompleksitas hubungan antara fitur (jumlah kamar, luas bangunan, lokasi, dll.) dengan harga rumah. Oleh karena itu, model ini dipilih untuk menghasilkan rekomendasi harga rumah yang lebih akurat.
