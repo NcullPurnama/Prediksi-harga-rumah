@@ -338,5 +338,4 @@ Evaluasi ini menunjukkan bahwa model bisa diandalkan untuk memberikan estimasi h
 
 4. **Barizki, Nafis. (2022).**  
    _“Daftar Harga Rumah Jabodetabek.”_
-   Kaggle Datasets.  
-   [https://www.kaggle.com/datasets/nafisbarizki/daftar-harga-rumah-jabodetabek](https://www.kaggle.com/datasets/nafisbarizki/daftar-harga-rumah-jabodetabek)
+   Kaggle Datasets.   [https://www.kaggle.com/datasets/nafisbarizki/daftar-harga-rumah-jabodetabek](https://www.kaggle.com/datasets/nafisbarizki/daftar-harga-rumah-jabodetabek)
