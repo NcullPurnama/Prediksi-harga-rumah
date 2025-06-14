@@ -284,10 +284,6 @@ Evaluasi model dilakukan untuk mengetahui seberapa baik model memprediksi harga 
 ---
 
 2. ### Root Mean Squared Error (**RMSE**)
-   - **Formula**:
-     \[
-     RMSE = \sqrt{MSE}
-     \]
    - **Penjelasan**: Akar dari MSE yang mengembalikan kesalahan dalam satuan asli (Rupiah), sehingga lebih mudah diinterpretasikan.
    - **Kelebihan**: Memberikan gambaran langsung tentang rata-rata deviasi prediksi dari harga sebenarnya.
    - **Interpretasi**: Jika RMSE = 500 juta, artinya prediksi rata-rata bisa meleset sebesar ±500 juta.
@@ -295,10 +291,6 @@ Evaluasi model dilakukan untuk mengetahui seberapa baik model memprediksi harga 
 ---
 
 3. ### R² Score (Koefisien Determinasi)
-   - **Formula**:
-     \[
-     R^2 = 1 - \frac{\sum (y_i - \hat{y}_i)^2}{\sum (y_i - \bar{y})^2}
-     \]
    - **Penjelasan**: Mengukur proporsi variansi harga rumah yang bisa dijelaskan oleh model. Nilai berkisar antara 0 dan 1.
    - **Interpretasi**:
      - R² = 0.90 → 90% variasi harga rumah berhasil dijelaskan oleh fitur.
