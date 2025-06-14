@@ -42,7 +42,6 @@ Masalah prediksi harga rumah dapat diselesaikan melalui pendekatan **Predictive 
    - Linear Regression
    - Random Forest
    - XGBoost
-   - AutoML (misalnya Auto-Sklearn)
 
 4. **Evaluasi Kinerja Model**  
    Mengukur performa model menggunakan metrik seperti:
@@ -54,29 +53,6 @@ Masalah prediksi harga rumah dapat diselesaikan melalui pendekatan **Predictive 
    Menyajikan hasil prediksi dalam bentuk grafik dan dashboard untuk membantu pengguna akhir memahami hasil secara visual.
 
 ---
-
-## 📚 Referensi
-
-1. **Badan Pusat Statistik (BPS). (2020).**  
-   _“Statistik Perumahan dan Permukiman.”_ Jakarta: BPS.  
-   > "Backlog perumahan di Indonesia mencapai lebih dari 12 juta unit."
-
-2. **Nurfadillah, R., & Prasetyo, E. (2021).**  
-   _“Prediksi Harga Rumah Menggunakan Metode Regresi dan Random Forest.”_  
-   Jurnal Ilmiah Komputer dan Informatika (JIKI), Vol. 6 No. 2.  
-   > Dalam studi ini, Random Forest terbukti lebih akurat dibandingkan metode regresi biasa untuk prediksi harga rumah.
-
-3. **Huang, X., & Wong, M. S. (2020).**  
-   _“Modeling Housing Price Using Machine Learning Algorithms: A Case Study of Hong Kong.”_  
-   ISPRS International Journal of Geo-Information, 9(7), 423.  
-   [https://doi.org/10.3390/ijgi9070423](https://doi.org/10.3390/ijgi9070423)  
-   > Penelitian ini menyimpulkan bahwa Gradient Boosting dan Random Forest mampu memberikan akurasi tinggi dalam prediksi harga properti.
-
-4. **Barizki, Nafis. (2022).**  
-   _“Daftar Harga Rumah Jabodetabek.”_
-   
-   Kaggle Datasets.  
-   [https://www.kaggle.com/datasets/nafisbarizki/daftar-harga-rumah-jabodetabek](https://www.kaggle.com/datasets/nafisbarizki/daftar-harga-rumah-jabodetabek)
 
 ## 💡 Solution Statements
 
@@ -103,6 +79,8 @@ Untuk mencapai tujuan prediksi harga rumah secara akurat, solusi yang diimplemen
 ---
 
 Setiap model dievaluasi secara objektif berdasarkan metrik akurasi prediksi dan dipilih model dengan performa terbaik untuk dijadikan sistem rekomendasi harga rumah.
+
+---
 
 ## 📊 Dataset Overview
 
@@ -181,6 +159,8 @@ Beberapa langkah EDA yang dilakukan:
 
 EDA ini membantu memahami pola dan variabel yang paling berkontribusi dalam menentukan harga rumah serta mendeteksi outlier atau missing value yang perlu ditangani sebelum modeling.
 
+---
+
 ## 🧹 Data Preparation
 
 Proses data preparation bertujuan untuk membersihkan dan menyiapkan data agar dapat digunakan oleh model machine learning secara optimal. Berikut adalah tahapan yang dilakukan secara berurutan:
@@ -228,6 +208,7 @@ Menggunakan `train_test_split` dari `sklearn.model_selection` dengan parameter `
 
 Dengan urutan preprocessing di atas, dataset menjadi bersih, konsisten, dan siap digunakan untuk pelatihan model prediktif.
 
+---
 
 ## 🤖 Machine Learning Modeling
 
@@ -282,3 +263,88 @@ Untuk menyelesaikan permasalahan prediksi harga rumah di wilayah Jabodetabek, du
 ### ✅ Kesimpulan Pemodelan
 
 Random Forest mampu menangkap kompleksitas hubungan antara fitur (jumlah kamar, luas bangunan, lokasi, dll.) dengan harga rumah. Oleh karena itu, model ini dipilih untuk menghasilkan rekomendasi harga rumah yang lebih akurat.
+
+## 📏 Model Evaluation
+
+Evaluasi model dilakukan untuk mengetahui seberapa baik model memprediksi harga rumah dibandingkan nilai sebenarnya. Dalam proyek ini, digunakan tiga metrik evaluasi regresi yang relevan:
+
+---
+
+### 📊 Metrik Evaluasi yang Digunakan
+
+1. ### Mean Squared Error (**MSE**)
+   - **Formula**:
+     \[
+     MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
+     \]
+   - **Penjelasan**: Mengukur rata-rata kesalahan kuadrat antara nilai aktual \( y_i \) dan prediksi \( \hat{y}_i \). Semakin kecil MSE, semakin akurat model.
+   - **Kelebihan**: Memberi penalti besar terhadap kesalahan besar (outlier).
+   - **Kekurangan**: Tidak berada dalam satuan yang sama dengan target (Rp), karena dikuadratkan.
+
+---
+
+2. ### Root Mean Squared Error (**RMSE**)
+   - **Formula**:
+     \[
+     RMSE = \sqrt{MSE}
+     \]
+   - **Penjelasan**: Akar dari MSE yang mengembalikan kesalahan dalam satuan asli (Rupiah), sehingga lebih mudah diinterpretasikan.
+   - **Kelebihan**: Memberikan gambaran langsung tentang rata-rata deviasi prediksi dari harga sebenarnya.
+   - **Interpretasi**: Jika RMSE = 500 juta, artinya prediksi rata-rata bisa meleset sebesar ±500 juta.
+
+---
+
+3. ### R² Score (Koefisien Determinasi)
+   - **Formula**:
+     \[
+     R^2 = 1 - \frac{\sum (y_i - \hat{y}_i)^2}{\sum (y_i - \bar{y})^2}
+     \]
+   - **Penjelasan**: Mengukur proporsi variansi harga rumah yang bisa dijelaskan oleh model. Nilai berkisar antara 0 dan 1.
+   - **Interpretasi**:
+     - R² = 0.90 → 90% variasi harga rumah berhasil dijelaskan oleh fitur.
+     - R² mendekati 1 berarti model sangat baik.
+
+---
+
+### 🧾 Hasil Evaluasi Model
+
+| Model               | MSE              | RMSE             | R² Score         |
+|--------------------|------------------|------------------|------------------|
+| Linear Regression  | tinggi (baseline)| tinggi           | rendah           |
+| Random Forest      | ✅ lebih rendah   | ✅ lebih kecil    | ✅ mendekati 1    |
+
+> 🔍 Berdasarkan ketiga metrik tersebut, **Random Forest Regressor** terbukti memiliki performa yang lebih baik dalam memprediksi harga rumah.
+
+---
+
+### 🧠 Kesimpulan
+
+Metrik evaluasi yang digunakan sudah sesuai dengan konteks **prediksi harga numerik** (regresi), dan model terbaik (Random Forest) memiliki:
+- Error absolut lebih rendah (RMSE)
+- Kemampuan menjelaskan variansi harga lebih baik (R² lebih tinggi)
+
+Evaluasi ini menunjukkan bahwa model bisa diandalkan untuk memberikan estimasi harga rumah yang masuk akal, khususnya untuk aplikasi rekomendasi.
+
+---
+
+## 📚 Referensi
+
+1. **Badan Pusat Statistik (BPS). (2020).**  
+   _“Statistik Perumahan dan Permukiman.”_ Jakarta: BPS.  
+   > "Backlog perumahan di Indonesia mencapai lebih dari 12 juta unit."
+
+2. **Nurfadillah, R., & Prasetyo, E. (2021).**  
+   _“Prediksi Harga Rumah Menggunakan Metode Regresi dan Random Forest.”_  
+   Jurnal Ilmiah Komputer dan Informatika (JIKI), Vol. 6 No. 2.  
+   > Dalam studi ini, Random Forest terbukti lebih akurat dibandingkan metode regresi biasa untuk prediksi harga rumah.
+
+3. **Huang, X., & Wong, M. S. (2020).**  
+   _“Modeling Housing Price Using Machine Learning Algorithms: A Case Study of Hong Kong.”_  
+   ISPRS International Journal of Geo-Information, 9(7), 423.  
+   [https://doi.org/10.3390/ijgi9070423](https://doi.org/10.3390/ijgi9070423)  
+   > Penelitian ini menyimpulkan bahwa Gradient Boosting dan Random Forest mampu memberikan akurasi tinggi dalam prediksi harga properti.
+
+4. **Barizki, Nafis. (2022).**  
+   _“Daftar Harga Rumah Jabodetabek.”_
+   Kaggle Datasets.  
+   [https://www.kaggle.com/datasets/nafisbarizki/daftar-harga-rumah-jabodetabek](https://www.kaggle.com/datasets/nafisbarizki/daftar-harga-rumah-jabodetabek)
