@@ -104,3 +104,79 @@ Untuk mencapai tujuan prediksi harga rumah secara akurat, solusi yang diimplemen
 
 Setiap model dievaluasi secara objektif berdasarkan metrik akurasi prediksi dan dipilih model dengan performa terbaik untuk dijadikan sistem rekomendasi harga rumah.
 
+## 📊 Dataset Overview
+
+### 🔗 Sumber Data
+
+Dataset yang digunakan berasal dari situs **Kaggle**, yaitu:
+
+> **Daftar Harga Rumah Jabodetabek**  
+> Link: [https://www.kaggle.com/datasets/nafisbarizki/daftar-harga-rumah-jabodetabek](https://www.kaggle.com/datasets/nafisbarizki/daftar-harga-rumah-jabodetabek)
+
+Dataset ini dikumpulkan dari listing properti pada website jual-beli rumah, dan berisi informasi lengkap mengenai atribut rumah di wilayah Jakarta, Bogor, Depok, Tangerang, dan Bekasi (Jabodetabek).
+
+---
+
+### 📦 Informasi Dataset
+
+- **Jumlah baris (entri):** 3553
+- **Jumlah kolom (fitur):** 27
+- **Tipe data:** kombinasi antara numerik (`float64`) dan kategorikal (`object`)
+- **Kondisi data:** terdapat beberapa nilai kosong (missing values) terutama pada fitur `building_age`, `property_condition`, `furnishing`, dan `building_orientation`
+
+---
+
+### 🏷️ Fitur/Variabel pada Dataset
+
+| Nama Kolom              | Deskripsi                                                                 |
+|-------------------------|--------------------------------------------------------------------------|
+| `url`                   | URL iklan rumah                                                          |
+| `price_in_rp`           | Harga rumah dalam Rupiah                                                 |
+| `title`                 | Judul iklan rumah                                                        |
+| `address`               | Alamat properti                                                          |
+| `district`              | Nama kecamatan atau area                                                 |
+| `city`                  | Nama kota                                                                |
+| `lat`, `long`           | Lokasi geografis properti (latitude dan longitude)                      |
+| `facilities`            | Fasilitas yang tersedia (misalnya taman, masjid, dll)                    |
+| `property_type`         | Jenis properti (rumah, apartemen, dll)                                  |
+| `ads_id`                | ID iklan                                                                 |
+| `bedrooms`              | Jumlah kamar tidur                                                       |
+| `bathrooms`             | Jumlah kamar mandi                                                       |
+| `land_size_m2`          | Luas tanah dalam meter persegi                                           |
+| `building_size_m2`      | Luas bangunan dalam meter persegi                                        |
+| `carports`              | Jumlah carport                                                           |
+| `certificate`           | Jenis sertifikat (SHM, HGB, dll)                                         |
+| `electricity`           | Daya listrik rumah                                                       |
+| `maid_bedrooms`         | Jumlah kamar ART                                                         |
+| `maid_bathrooms`        | Jumlah kamar mandi ART                                                   |
+| `floors`                | Jumlah lantai                                                            |
+| `building_age`          | Usia bangunan                                                            |
+| `year_built`            | Tahun dibangun                                                           |
+| `property_condition`    | Kondisi bangunan (bagus, sedang, dll)                                    |
+| `building_orientation`  | Arah bangunan menghadap                                                  |
+| `garages`               | Jumlah garasi                                                            |
+| `furnishing`            | Status kelengkapan (furnished/unfurnished/semi)                          |
+
+---
+
+## 🧪 Exploratory Data Analysis (EDA)
+
+### 1. Statistik Umum
+
+Dataset terdiri dari:
+- Harga rumah: dari **ratusan juta hingga puluhan miliar**
+- Luas tanah: bervariasi dari kecil (30m²) hingga sangat luas (>1000m²)
+- Jumlah kamar tidur & mandi: rentang 1–10+
+- Daya listrik: berkisar antara 900 VA hingga 6600 VA ke atas
+
+### 2. Visualisasi dan Distribusi Awal
+
+Beberapa langkah EDA yang dilakukan:
+- **Distribusi harga** (`price_in_rp`) dengan histogram → data bersifat **right-skewed**
+- **Korelasi numerik** antar fitur (`land_size_m2`, `building_size_m2`, `bedrooms`) terhadap harga rumah
+- **Boxplot** untuk melihat penyebaran harga per `city` dan `property_type`
+- **Heatmap korelasi** antar fitur numerik → mengungkap fitur paling relevan terhadap `price_in_rp`
+
+---
+
+EDA ini membantu memahami pola dan variabel yang paling berkontribusi dalam menentukan harga rumah serta mendeteksi outlier atau missing value yang perlu ditangani sebelum modeling.
