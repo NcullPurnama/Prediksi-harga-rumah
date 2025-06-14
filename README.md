@@ -268,13 +268,14 @@ Membersihkan kolom electricity dari teks tambahan dan mengubah ke integer yang s
 ![membersihkan](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/elec.jpg)
 
 ---
+2. Data Preparation
 
 ### 5. Drop kolom dengan missing value >40%
 Membersihkan kolom dengan data kosong >40% dilakukan untuk mempermudah dalam pembuatan model. Jika menggunakan median atau modus bisa jadi akan menimbulkan outlier
 
 ![missing](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/missing_value.jpg)
 
-### 5. Drop baris dengan missing kecil
+### 6. Drop baris dengan missing kecil
 Drop baris dengan missing kecil dilakukan karena jumlah jumlah missing valuenya terlalu kecil, maka dari itu kita drop saja
 
 ![1 baris](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/1_baris.jpg)
@@ -370,11 +371,10 @@ Untuk menyelesaikan permasalahan prediksi harga rumah di wilayah Jabodetabek, du
 
 #### 📈 Evaluasi Model
 
-| Model               | MSE (lebih kecil lebih baik) | RMSE | R² Score (lebih tinggi lebih baik) |
-|--------------------|------------------------------|------|-------------------------------------|
-| Linear Regression  | 1.17e+18   | 1.08e+09           | 0.6324           |
-| Random Forest      |  4.92e+17    | 7.01e+08 | 0.8043     |
-
+| Model               | RMSE                   | R² Score              |
+|---------------------|------------------------|-----------------------|
+| Linear Regression   | 0.5816430406755284     | 0.7410411747685459    |
+| Random Forest       | 0.3865416714923684     | 0.8856304836559896    |
 > **Random Forest Regressor dipilih sebagai model terbaik** karena menghasilkan nilai R² dan RMSE yang jauh lebih baik dibandingkan baseline Linear Regression.
 
 ---
@@ -390,45 +390,28 @@ Evaluasi model dilakukan untuk mengetahui seberapa baik model memprediksi harga 
 ---
 
 ### 📊 Metrik Evaluasi yang Digunakan
-
-1. ### Mean Squared Error (**MSE**)
-   - **Penjelasan**: Mengukur rata-rata kesalahan kuadrat antara nilai aktual \( y_i \) dan prediksi \( \hat{y}_i \). Semakin kecil MSE, semakin akurat model.
-   - **Kelebihan**: Memberi penalti besar terhadap kesalahan besar (outlier).
-   - **Kekurangan**: Tidak berada dalam satuan yang sama dengan target (Rp), karena dikuadratkan.
-
----
-
-2. ### Root Mean Squared Error (**RMSE**)
+1. ### Root Mean Squared Error (**RMSE**)
    - **Penjelasan**: Akar dari MSE yang mengembalikan kesalahan dalam satuan asli (Rupiah), sehingga lebih mudah diinterpretasikan.
    - **Kelebihan**: Memberikan gambaran langsung tentang rata-rata deviasi prediksi dari harga sebenarnya.
    - **Interpretasi**: Jika RMSE = 500 juta, artinya prediksi rata-rata bisa meleset sebesar ±500 juta.
 
 ---
 
-3. ### R² Score (Koefisien Determinasi)
+2. ### R² Score (Koefisien Determinasi)
    - **Penjelasan**: Mengukur proporsi variansi harga rumah yang bisa dijelaskan oleh model. Nilai berkisar antara 0 dan 1.
    - **Interpretasi**:
      - R² = 0.90 → 90% variasi harga rumah berhasil dijelaskan oleh fitur.
      - R² mendekati 1 berarti model sangat baik.
-
----
-
-### 🧾 Hasil Evaluasi Model
-
-| Model               | MSE              | RMSE             | R² Score         |
-|--------------------|------------------|------------------|------------------|
-| Linear Regression  | ✅ 1.17e+18 (lebih rendah)   | 1.08e+09           | 0.6324           |
-| Random Forest      |  4.92e+17    | ✅ 7.01e+08 (lebih kecil)    | ✅ 0.8043 (mendekati 1)    |
-
-> 🔍 Berdasarkan ketiga metrik tersebut, **Random Forest Regressor** terbukti memiliki performa yang lebih baik dalam memprediksi harga rumah.
+     
+> 🔍 Berdasarkan kedua metrik tersebut, **Random Forest Regressor** terbukti memiliki performa yang lebih baik dalam memprediksi harga rumah.
 
 ---
 
 ### 🧠 Kesimpulan
 
 Metrik evaluasi yang digunakan sudah sesuai dengan konteks **prediksi harga numerik** (regresi), dan model terbaik (Random Forest) memiliki:
-- RMSE lebih rendah: 701 juta
-- R² Score lebih tinggi: 0.8043
+- RMSE lebih rendah: 0.3865416714923684
+- R² Score lebih tinggi: 0.8856304836559896
 
 Evaluasi ini menunjukkan bahwa model bisa diandalkan untuk memberikan estimasi harga rumah yang masuk akal, khususnya untuk aplikasi rekomendasi.
 
