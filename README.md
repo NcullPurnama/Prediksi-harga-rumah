@@ -161,6 +161,70 @@ EDA ini membantu memahami pola dan variabel yang paling berkontribusi dalam mene
 
 ---
 
+## 📈 Visualisasi Distribusi Fitur Numerik
+
+### Distribusi Luas Tanah
+![Distribusi Luas Tanah](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_luas_tanah.png)
+
+### Distribusi Luas Bangunan
+![Distribusi Luas Bangunan](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_luas_bangunan.png)
+
+### Distribusi Jumlah Lantai
+![Distribusi Lantai](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_lantai.png)
+
+### Distribusi Listrik
+![Distribusi Listrik](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_listrik.png)
+
+### Distribusi Carport
+![Distribusi Carport](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_carport.png)
+
+### Distribusi Garasi
+![Distribusi Garasi](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_garasi.png)
+
+### Distribusi Jumlah Kamar
+![Distribusi Kamar](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_kamar.png)
+
+### Distribusi Jumlah Kamar Mandi
+![Distribusi Kamar Mandi](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_kamar_mandi.png)
+
+### Distribusi Kamar ART
+![Distribusi Kamar ART](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_kamar_ART.png)
+
+### Distribusi Harga Rumah
+![Distribusi Harga Rumah](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_harga_rumah.png)
+
+---
+
+## Visualisasi Distribusi Fitur Kategorikal
+
+### Tipe Furnishing
+![Distribusi Furnishing](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_kategori_furnishing.png)
+
+### Kondisi Properti
+![Distribusi Kondisi Properti](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_kategori_kondisi.png)
+
+### Kota
+![Distribusi Kota](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_kategori_kota.png)
+
+### Sertifikat
+![Distribusi Sertifikat](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_kategori_sertifikat.png)
+
+### Tipe Properti
+![Distribusi Tipe Properti](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_kategori_tipe.png)
+
+### Wilayah
+![Distribusi Wilayah](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/distribusi_kategori_wilayah.png)
+
+---
+
+## Heatmap Korelasi
+
+### Korelasi Antar Variabel Numerik
+![Heatmap Korelasi](https://raw.githubusercontent.com/NcullPurnama/Prediksi-harga-rumah/main/gambar/heatmap.png)
+
+
+---
+
 ## 🧹 Data Preparation
 
 Proses data preparation bertujuan untuk membersihkan dan menyiapkan data agar dapat digunakan oleh model machine learning secara optimal. Berikut adalah tahapan yang dilakukan secara berurutan:
@@ -177,7 +241,7 @@ Beberapa kolom seperti `url`, `title`, `address`, `ads_id`, `year_built` dihapus
 ---
 
 ### 2. Menangani Missing Values
-Beberapa kolom seperti `building_age`, `property_condition`, `furnishing`, dan `building_orientation` memiliki nilai kosong (`NaN`).
+Beberapa kolom seperti `bedrooms`, `bathrooms`, `land_size_m2`, `building_size_m2`, `floors`, `electricity`, `certificate`, `property_condition`, `furnishing`
 
 Teknik yang digunakan:
 - Untuk numerik: diisi dengan **median**
@@ -187,7 +251,16 @@ Teknik yang digunakan:
 
 ---
 
-### 3. Feature Scaling
+### 3. Encoding Variabel Kategorikal 
+Kolom seperti `city`, `property_type`, `certificate`, `furnishing`, dan `building_orientation` diubah menjadi numerik menggunakan:
+- **Label Encoding**: jika hanya memiliki sedikit kategori
+- **One-Hot Encoding**: jika jumlah kategori relatif banyak dan tidak ordinal
+
+> 📌 **Alasan:** Model machine learning tidak dapat memproses data string secara langsung. Encoding memungkinkan model memahami informasi kategorikal.
+
+---
+
+### 4. Feature Scaling
 Fitur numerik seperti `land_size_m2`, `building_size_m2`, `electricity`, dan `building_age` dilakukan scaling menggunakan:
 - **StandardScaler** dari `sklearn.preprocessing`
 
@@ -195,7 +268,7 @@ Fitur numerik seperti `land_size_m2`, `building_size_m2`, `electricity`, dan `bu
 
 ---
 
-### 4. Membagi Dataset
+### 5. Membagi Dataset
 Dataset dibagi menjadi:
 - **Training Set (80%)**
 - **Testing Set (20%)**
@@ -207,7 +280,6 @@ Menggunakan `train_test_split` dari `sklearn.model_selection` dengan parameter `
 ---
 
 Dengan urutan preprocessing di atas, dataset menjadi bersih, konsisten, dan siap digunakan untuk pelatihan model prediktif.
-
 ---
 
 ## 🤖 Machine Learning Modeling
@@ -338,5 +410,4 @@ Evaluasi ini menunjukkan bahwa model bisa diandalkan untuk memberikan estimasi h
 
 4. **Barizki, Nafis. (2022).**  
    _“Daftar Harga Rumah Jabodetabek.”_
-   Kaggle Datasets.  
-   [https://www.kaggle.com/datasets/nafisbarizki/daftar-harga-rumah-jabodetabek](https://www.kaggle.com/datasets/nafisbarizki/daftar-harga-rumah-jabodetabek)
+   Kaggle Datasets.   [https://www.kaggle.com/datasets/nafisbarizki/daftar-harga-rumah-jabodetabek](https://www.kaggle.com/datasets/nafisbarizki/daftar-harga-rumah-jabodetabek)
